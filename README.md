@@ -1,9 +1,9 @@
-# \[New Team\]
+# New Team
 
 **Group members:**
 - Qi
 - Yasmin
-- C
+
 
 This repository contains  
 1. Inaugural project. 
