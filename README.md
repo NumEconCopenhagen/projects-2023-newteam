@@ -1,8 +1,8 @@
-# \[Group name\]
+# \[New Team\]
 
 **Group members:**
-- A
-- B
+- Qi
+- Yasmin
 - C
 
 This repository contains  
