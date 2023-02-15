@@ -1,4 +1,4 @@
-# \[New Team\]
+# New Team
 
 **Group members:**
 - Qi
