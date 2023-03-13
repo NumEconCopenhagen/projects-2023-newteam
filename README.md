@@ -1,7 +1,7 @@
 # New Team
 
 **Group members:**
-- Qi Zhang
+- Qi
 - Yasmin
 
 
