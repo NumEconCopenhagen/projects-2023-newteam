@@ -1,3 +1,5 @@
+from types import SimpleNamespace
+
 class inauguralproject:
 
     def __init__(self):
