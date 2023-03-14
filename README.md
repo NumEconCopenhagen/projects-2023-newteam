@@ -3,6 +3,7 @@
 **Group members:**
 - Qi
 - Yasmin
+- Tore 
 
 
 This repository contains  
