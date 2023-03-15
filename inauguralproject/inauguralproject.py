@@ -25,7 +25,7 @@ class inauguralproject:
         par.wF_vec = np.linspace(0.8,1.2,5)
 
         
-
+    #define utility functions
     def calc (self,LM,HM,LF,HF):
         
         par = self.par
@@ -51,20 +51,42 @@ class inauguralproject:
         tot_utility = utility - cost
         return tot_utility 
 
-
-
-    def func_marketgoods():
-    """ square numpy array
-    
-    Args:
-    
-        x (ndarray): input array
+#im not sure about this part we might look at that again
+def solve_discrete(self,do_print=False):
+        """ solve model discretely """
         
-    Returns:
+        par = self.par
+        sol = self.sol
+        opt = SimpleNamespace()
+        
+        # a. all possible choices
+        x = np.linspace(0,24,49)
+        LM,HM,LF,HF = np.meshgrid(x,x,x,x) # all combinations
     
-        y (ndarray): output array
+        LM = LM.ravel() # vector
+        HM = HM.ravel()
+        LF = LF.ravel()
+        HF = HF.ravel()
+
+        # b. calculate utility
+        u = self.calc_utility(LM,HM,LF,HF)
     
-    """
+        # c. set to minus infinity if constraint is broken
+        I = (LM+HM > 24) | (LF+HF > 24) # | is "or"
+        u[I] = -np.inf
     
-    y = x**2
-    return y
+        # d. find maximizing argument
+        j = np.argmax(u)
+        
+        opt.LM = LM[j]
+        opt.HM = HM[j]
+        opt.LF = LF[j]
+        opt.HF = HF[j]
+
+        # e. print
+        if do_print:
+            for k,v in opt.__dict__.items():
+                print(f'{k} = {v:6.4f}')
+
+        return opt
+#until here im not sure if its correct (becuase its just a copy of his code)
