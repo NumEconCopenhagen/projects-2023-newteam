@@ -55,7 +55,11 @@ class inauguralproject:
         # b. home production
         if par.sigma==1:
             H = HM**(1-par.alpha)*HF**par.alpha
-        #elif: #add code for elif and else 
+        elif par.sigma == 0:
+            H = np.min (HM, HF)
+        else:
+            H = (1- par.alpha)*HM**((par.sigma -1)/par.sigma)+ par.alpha*HF**((par.sigma -1)/par.sigma)
+        # add code for elif and else 
 
         # c. total consumption utility
         Q = C**par.omega*H**(1-par.omega)
