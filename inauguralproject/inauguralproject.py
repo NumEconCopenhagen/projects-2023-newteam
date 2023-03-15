@@ -1,16 +1,19 @@
 from types import SimpleNamespace
+import numpy as np
 
 class inauguralproject:
 
     def __init__(self):
     # a. create namespaces
         par = self.par = SimpleNamespace()
+        sol = self.sol = SimpleNamespace()
 
     # add preferences
-        par.p = 2
+        par.rho = 2
         par.v = 0.001
         par.omega = 0.5 
         par.epsilon = 1
+       
 
     # add household production
         par.alpha = 0.5
@@ -19,6 +22,7 @@ class inauguralproject:
     # add wages
         par.wM = 1
         par.wF = 1
+        par.wF_vec = np.linspace(0.8,1.2,5)
 
         
 
@@ -46,10 +50,6 @@ class inauguralproject:
         #Total utility
         tot_utility = utility - cost
         return tot_utility 
-    
-
-
-
 
 
 
