@@ -53,7 +53,9 @@ class inauguralproject:
         C = par.wM*LM + par.wF*LF
 
         # b. home production
-        H = HM**(1-par.alpha)*HF**par.alpha
+        if par.sigma==1:
+            H = HM**(1-par.alpha)*HF**par.alpha
+        #elif: #add code for elif and else 
 
         # c. total consumption utility
         Q = C**par.omega*H**(1-par.omega)
