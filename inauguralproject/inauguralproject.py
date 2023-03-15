@@ -53,7 +53,6 @@ class inauguralproject:
 
 #im not sure about this part we might look at that again
 def solve_discrete(self,do_print=False):
-        """ solve model discretely """
         
         par = self.par
         sol = self.sol
@@ -68,25 +67,6 @@ def solve_discrete(self,do_print=False):
         LF = LF.ravel()
         HF = HF.ravel()
 
-        # b. calculate utility
-        u = self.calc_utility(LM,HM,LF,HF)
-    
-        # c. set to minus infinity if constraint is broken
-        I = (LM+HM > 24) | (LF+HF > 24) # | is "or"
-        u[I] = -np.inf
-    
-        # d. find maximizing argument
-        j = np.argmax(u)
-        
-        opt.LM = LM[j]
-        opt.HM = HM[j]
-        opt.LF = LF[j]
-        opt.HF = HF[j]
-
-        # e. print
-        if do_print:
-            for k,v in opt.__dict__.items():
-                print(f'{k} = {v:6.4f}')
-
-        return opt
 #until here im not sure if its correct (becuase its just a copy of his code)
+
+
