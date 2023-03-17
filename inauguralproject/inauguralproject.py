@@ -111,10 +111,38 @@ class inauguralproject:
 
         return opt
 
-    def solve(self,do_print=False):
-        """ solve model continously """
+    def solve(self, do_print=False):
+        """ solve model continuously """
 
-        pass    
+        par = self.par
+        sol = self.sol
+
+        # a. set up objective function
+        def obj(wF):
+            par.wF = wF
+            opt = self.solve_discrete(do_print=False)
+            return -opt.HF/opt.HM
+
+        # b. find optimal wage ratio for each wF
+        for i in range(par.wF_vec.size):
+            wF = par.wF_vec[i]
+            result = optimize.minimize_scalar(obj, bracket=(0.1, 10.0))
+            wM = par.wM
+            par.wF = wF
+            sol.HM_vec[i] = self.solve_for_HM(wM, wF)
+            sol.HF_vec[i] = result.x * sol.HM_vec[i]
+            sol.LM_vec[i] = 24 - sol.HM_vec[i]
+            sol.LF_vec[i] = 24 - sol.HF_vec[i]
+
+        # c. run regression
+        self.run_regression()
+
+        # d. plot results
+        plt.plot(np.log(par.wF_vec), np.log(sol.HF_vec / sol.HM_vec))
+        plt.xlabel('log(wF/wM)')
+        plt.ylabel('log(HF/HM)')
+        plt.show()
+        
 
     def solve_wF_vec(self,discrete=False):
         """ solve model for vector of female wages """
