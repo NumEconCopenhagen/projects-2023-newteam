@@ -53,7 +53,7 @@ class inauguralproject:
         C = par.wM*LM + par.wF*LF
 
         # b. home production
-        if par.sigma==1:
+        if par.sigma == 1:
             H = HM**(1-par.alpha)*HF**par.alpha
         elif par.sigma == 0:
             H = np.min (HM, HF)
