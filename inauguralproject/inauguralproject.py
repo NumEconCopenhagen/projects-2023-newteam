@@ -164,3 +164,45 @@ class inauguralproject:
         """ estimate alpha and sigma """
 
         pass
+
+        #Temporary/unfinished function: 
+    def minimize_variance(self, alpha=[] , sigma=[] ):
+        #Find alpha and sigma that minimizes combined variance of the betas
+
+
+        par = self.par
+        sol = self.sol
+
+        low_var = np.Infinity
+
+        #Loop for every alpha variable
+        for i in range(len(alpha)):
+
+            #Loop for every sigma variable
+            for j in range(len(sigma)):
+             
+             par.alpha = alpha[i]
+             par.sigma = sigma[j]
+
+
+             #?
+             inauguralproject.solve
+
+             #Calculate the variance
+
+             #need some way to bring the beta values from regression function?
+             tot_var = (sol.beta0-par.beta0_target)**2+(sol.beta1-par.beta1_target)**2
+
+             #check if smaller
+             if (tot_var<low_var):
+                     low_var = tot_var
+                     min_alpha = alpha(i)
+                     min_sigma = sigma(j)
+                     
+        
+
+        #Return alpha, sigma and lowest variance
+        return min_alpha , min_sigma, low_var
+    
+                     
+        
