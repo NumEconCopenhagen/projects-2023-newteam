@@ -138,7 +138,7 @@ class inauguralproject:
         self.run_regression()
 
         # d. plot results
-        plt.plot(np.log(par.wF_vec), np.log(sol.HF_vec / sol.HM_vec))
+        plt.plot(np.log(par.wF_vec / par.wM_vec), np.log(sol.HF_vec / sol.HM_vec))
         plt.xlabel('log(wF/wM)')
         plt.ylabel('log(HF/HM)')
         plt.show()
