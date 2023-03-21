@@ -149,10 +149,6 @@ class inauguralproject:
         for k,i in enumerate(par.wF_vec) :
             par.wF = i
             val = self.solve()
-            sol.LM_vec[k] = val.LM
-            sol.LF_vec[k] = val.LF
-            sol.HM_vec[k] = val.HM
-            sol.HF_vec[k] = val.HF
 
         return sol
 
