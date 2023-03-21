@@ -154,6 +154,8 @@ class inauguralproject:
             sol.HM_vec[k] = out.HM
             sol.HF_vec[k] = out.HF
 
+        return sol
+
     def run_regression(self):
         """ run regression """
 
