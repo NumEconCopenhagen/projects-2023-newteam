@@ -143,7 +143,18 @@ class inauguralproject:
     def solve_wF_vec(self,discrete=False):
         """ solve model for vector of female wages """
 
-        pass
+        par = self.par
+        sol = self.sol
+
+        for k,i in enumerate(par.wF_vec) :
+            par.wF = i
+            out = self.solve()
+            sol.LM_vec[k] = out.LM
+            sol.LF_vec[k] = out.LF
+            sol.HM_vec[k] = out.HM
+            sol.HF_vec[k] = out.HF
+
+        return sol
 
     def run_regression(self):
         """ run regression """
