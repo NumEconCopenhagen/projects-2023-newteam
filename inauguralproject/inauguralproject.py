@@ -121,33 +121,15 @@ class inauguralproject:
         def obj(x):
             opt = self.calc_utility(x[0], x[1], x[2], x[3])
             return - opt
-            #par.wF = wF
-            #opt = self.solve_discrete(do_print=False)
-            #return -opt.HF/opt.HM
-
+        
         # b. find optimal wage ratio for each wF
         for i in range(par.wF_vec.size):
             par.wF = par.wF_vec[i]
             result = optimize.minimize(obj, x0 = [12]*4, bounds = [(0,24)]*4)
-            #wM = par.wM
-            #par.wF = wF
-            print(result.x)
             sol.HM_vec[i] = result.x[0]
             sol.HF_vec[i] = result.x[1]
             sol.LM_vec[i] = result.x[2]
             sol.LF_vec[i] = result.x[3]
-
-         
-            #sol.HM_vec[i] = self.solve_for_HM(wM, wF)
-            #sol.HF_vec[i] = result.x * sol.HM_vec[i]
-            #sol.LM_vec[i] = 24 - sol.HM_vec[i]
-            #sol.LF_vec[i] = 24 - sol.HF_vec[i]
-
-        # c. run regression
-        #self.run_regression()
-
-        
-        
 
     def solve_wF_vec(self,discrete=False):
         """ solve model for vector of female wages """
@@ -179,7 +161,7 @@ class inauguralproject:
 
         #Temporary/unfinished function: 
     def minimize_variance(self, alpha=[] , sigma=[] ):
-        #Find alpha and sigma that minimizes combined variance of the betas
+        #FindS alpha and sigma that minimizes combined variance of the betas
 
 
         par = self.par
