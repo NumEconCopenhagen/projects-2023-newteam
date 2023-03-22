@@ -118,24 +118,33 @@ class inauguralproject:
         sol = self.sol
 
         # a. set up objective function
-        def obj(wF):
-            par.wF = wF
-            opt = self.solve_discrete(do_print=False)
-            return -opt.HF/opt.HM
+        def obj(x):
+            opt = self.calc_utility(x[0], x[1], x[2], x[3])
+            return - opt
+            #par.wF = wF
+            #opt = self.solve_discrete(do_print=False)
+            #return -opt.HF/opt.HM
 
         # b. find optimal wage ratio for each wF
         for i in range(par.wF_vec.size):
-            wF = par.wF_vec[i]
-            result = optimize.minimize_scalar(obj, bracket=(0.1, 10.0))
-            wM = par.wM
-            par.wF = wF
-            sol.HM_vec[i] = self.solve_for_HM(wM, wF)
-            sol.HF_vec[i] = result.x * sol.HM_vec[i]
-            sol.LM_vec[i] = 24 - sol.HM_vec[i]
-            sol.LF_vec[i] = 24 - sol.HF_vec[i]
+            par.wF = par.wF_vec[i]
+            result = optimize.minimize(obj, x0 = [12]*4, bounds = [(0,24)]*4)
+            #wM = par.wM
+            #par.wF = wF
+            print(result.x)
+            sol.HM_vec[i] = result.x[0]
+            sol.HF_vec[i] = result.x[1]
+            sol.LM_vec[i] = result.x[2]
+            sol.LF_vec[i] = result.x[3]
+
+         
+            #sol.HM_vec[i] = self.solve_for_HM(wM, wF)
+            #sol.HF_vec[i] = result.x * sol.HM_vec[i]
+            #sol.LM_vec[i] = 24 - sol.HM_vec[i]
+            #sol.LF_vec[i] = 24 - sol.HF_vec[i]
 
         # c. run regression
-        self.run_regression()
+        #self.run_regression()
 
         
         
