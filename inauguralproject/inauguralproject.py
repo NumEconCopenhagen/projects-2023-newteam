@@ -139,7 +139,7 @@ class inauguralproject:
         opt = SimpleNamespace()
 
         if discrete ==True:
-            for k,i in enumerate(par.wF_vec) :
+            for i in enumerate(par.wF_vec) :
                 par.wF = i
                 opt = self.solve_discrete()
                 sol.HM_vec[i]=opt.HM
@@ -147,8 +147,8 @@ class inauguralproject:
                 sol.LM_vec[i]=opt.LM
                 sol.LF_vec[i]=opt.LF
 
-        if discrete ==False:
-            for k, i in enumerate(par.wF_vec):
+        else:
+            for i in enumerate(par.wF_vec):
                 par.wF = i
                 opt = self.solve()
                 sol.HM_vec[i]=opt.HM
@@ -200,7 +200,7 @@ class inauguralproject:
 
                 print("par.sigma = "+str(par.sigma))
 
-                self.solve_wF_vec
+                self.solve_wF_vec()
                 self.run_regression(print==True)
 
                 var = (par.beta0_target-sol.beta0)**2 + (par.beta1_target-sol.beta1)**2
