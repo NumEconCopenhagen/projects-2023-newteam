@@ -29,6 +29,7 @@ class inauguralproject:
         par.wM = 1.0
         par.wF = 1.0
         par.wF_vec = np.linspace(0.8,1.2,5)
+        par.wF_vec_int = par.wF_vec.astype(int)
 
         # e. targets
         par.beta0_target = 0.4
@@ -125,11 +126,12 @@ class inauguralproject:
         # b. find optimal wage ratio for each wF
         for i in range(par.wF_vec.size):
             par.wF = par.wF_vec[i]
-            result = optimize.minimize(obj, x0 = [12]*4, bounds = [(0,24)]*4)
+            result = optimize.minimize(obj, x0 = [12.0]*4, bounds = [(0,24)]*4)
             sol.HM_vec[i] = result.x[0]
             sol.HF_vec[i] = result.x[1]
             sol.LM_vec[i] = result.x[2]
             sol.LF_vec[i] = result.x[3]
+        
 
     def solve_wF_vec(self,discrete=False):
         """ solve model for vector of female wages """
@@ -139,7 +141,7 @@ class inauguralproject:
         opt = SimpleNamespace()
 
         if discrete ==True:
-            for i in enumerate(par.wF_vec) :
+            for i in enumerate(par.wF_vec_int) :
                 par.wF = i
                 opt = self.solve_discrete()
                 sol.HM_vec[i]=opt.HM
@@ -148,13 +150,13 @@ class inauguralproject:
                 sol.LF_vec[i]=opt.LF
 
         else:
-            for i in enumerate(par.wF_vec):
+            for i in enumerate(par.wF_vec_int) :
                 par.wF = i
                 opt = self.solve()
-                sol.HM_vec[i]=opt.HM
-                sol.HF_vec[i]=opt.HF
-                sol.LM_vec[i]=opt.LM
-                sol.LF_vec[i]=opt.LF
+                #sol.HM_vec[i]=opt.HM
+                #sol.HF_vec[i]=opt.HF
+                #sol.LM_vec[i]=opt.LM
+                #sol.LF_vec[i]=opt.LF
 
         return sol
 
@@ -186,16 +188,12 @@ class inauguralproject:
 
         for alp  in enumerate(alpha):
 
-            print ("alp: "+str(alp))
-
             par.alpha = alp[-1]
 
             print("par.alpha = "+str(par.alpha))
 
             for sig in enumerate(sigma):
 
-
-                print ("sig: "+str(sig))
                 par.sigma = sig[-1]
 
                 print("par.sigma = "+str(par.sigma))
