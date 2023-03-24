@@ -29,7 +29,6 @@ class inauguralproject:
         par.wM = 1.0
         par.wF = 1.0
         par.wF_vec = np.linspace(0.8,1.2,5)
-        par.wF_vec_int = par.wF_vec.astype(int)
 
         # e. targets
         par.beta0_target = 0.4
@@ -141,7 +140,7 @@ class inauguralproject:
         opt = SimpleNamespace()
 
         if discrete ==True:
-            for i in enumerate(par.wF_vec_int) :
+            for i in enumerate(par.wF_vec) :
                 par.wF = i
                 opt = self.solve_discrete()
                 sol.HM_vec[i]=opt.HM
@@ -150,7 +149,7 @@ class inauguralproject:
                 sol.LF_vec[i]=opt.LF
 
         else:
-            for i in enumerate(par.wF_vec_int) :
+            for i in enumerate(par.wF_vec) :
                 par.wF = i
                 opt = self.solve()
                 #sol.HM_vec[i]=opt.HM
