@@ -170,8 +170,8 @@ class inauguralproject:
         A = np.vstack([np.ones(x.size),x]).T
         sol.beta0,sol.beta1 = np.linalg.lstsq(A,y,rcond=None)[0]
         if print == True :
-            print("Beta0 = " + sol.beta0)
-            print("Beta1 = " + sol.beta1)
+            print("Beta0 = " + str(sol.beta0))
+            print("Beta1 = " + str(sol.beta1))
     
     
     def estimate(self, alpha=np.nan, sigma=np.nan ):
