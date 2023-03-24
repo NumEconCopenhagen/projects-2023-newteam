@@ -136,14 +136,29 @@ class inauguralproject:
 
         par = self.par
         sol = self.sol
+        opt = SimpleNamespace()
 
-        for k,i in enumerate(par.wF_vec) :
-            par.wF = i
-            val = self.solve()
+        if discrete ==True:
+            for k,i in enumerate(par.wF_vec) :
+                par.wF = i
+                opt = self.solve_discrete()
+                sol.HM_vec[i]=opt.HM
+                sol.HF_vec[i]=opt.HF
+                sol.LM_vec[i]=opt.LM
+                sol.LF_vec[i]=opt.LF
+
+        if discrete ==False:
+            for k, i in enumerate(par.wF_vec):
+                par.wF = i
+                opt = self.solve()
+                sol.HM_vec[i]=opt.HM
+                sol.HF_vec[i]=opt.HF
+                sol.LM_vec[i]=opt.LM
+                sol.LF_vec[i]=opt.LF
 
         return sol
 
-    def run_regression(self):
+    def run_regression(self,print=False):
         """ run regression """
 
         par = self.par
@@ -153,11 +168,50 @@ class inauguralproject:
         y = np.log(sol.HF_vec/sol.HM_vec)
         A = np.vstack([np.ones(x.size),x]).T
         sol.beta0,sol.beta1 = np.linalg.lstsq(A,y,rcond=None)[0]
+        if print == True :
+            print("Beta0 = " + sol.beta0)
+            print("Beta1 = " + sol.beta1)
     
-    def estimate(self,alpha=None,sigma=None):
+    
+    def estimate(self, print=False , alpha=None, sigma=None, min_a=0, max_a=1, min_s=0, max_s=1 ):
         """ estimate alpha and sigma """
 
-        pass
+        par = self.par
+        sol = self.sol
+
+        min_var = np.inf
+        A = np.nan
+        S = np.nan
+
+        a_vec = np.linspace(min_a,max_a,20)
+        s_vec = np.linspace(min_s,max_s,20)
+
+
+        for alp in a_vec:
+            for sig in s_vec:
+                for wF in par.wF_vec:
+
+                    self.solve_wF_vec
+                    self.run_regression(print==True)
+
+                    var = (par.beta0_target-sol.beta0)**2 + (par.beta1_target-sol.beta1)**2
+
+                    if var < min_var :
+                        A = alp
+                        S = sig 
+                        min_var = var
+
+        if print==True:
+            print(A)
+            print(S)
+
+        return A, S
+
+
+
+
+
+
 
         #Temporary/unfinished function: 
     def minimize_variance(self, alpha=[] , sigma=[] ):
@@ -200,3 +254,4 @@ class inauguralproject:
     
                      
         
+    def var_b(self)
