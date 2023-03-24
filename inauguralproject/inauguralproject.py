@@ -173,39 +173,56 @@ class inauguralproject:
             print("Beta1 = " + sol.beta1)
     
     
-    def estimate(self, print=False , alpha=None, sigma=None, min_a=0, max_a=1, min_s=0, max_s=1 ):
+    def estimate(self, alpha=np.nan, sigma=np.nan ):
         """ estimate alpha and sigma """
 
         par = self.par
         sol = self.sol
 
-        min_var = np.inf
+        min_var = np.nan
         A = np.nan
         S = np.nan
+        i=1
 
-        a_vec = np.linspace(min_a,max_a,20)
-        s_vec = np.linspace(min_s,max_s,20)
+        for alp  in enumerate(alpha):
+
+            print ("alp: "+str(alp))
+
+            par.alpha = alp[-1]
+
+            print("par.alpha = "+str(par.alpha))
+
+            for sig in enumerate(sigma):
 
 
-        for alp in a_vec:
-            for sig in s_vec:
-                for wF in par.wF_vec:
+                print ("sig: "+str(sig))
+                par.sigma = sig[-1]
 
-                    self.solve_wF_vec
-                    self.run_regression(print==True)
+                print("par.sigma = "+str(par.sigma))
 
-                    var = (par.beta0_target-sol.beta0)**2 + (par.beta1_target-sol.beta1)**2
+                self.solve_wF_vec
+                self.run_regression(print==True)
 
-                    if var < min_var :
-                        A = alp
-                        S = sig 
-                        min_var = var
+                var = (par.beta0_target-sol.beta0)**2 + (par.beta1_target-sol.beta1)**2
+                print(var)
 
-        if print==True:
-            print(A)
-            print(S)
+                if min_var is np.nan:
+                    A = par.alpha
+                    S = par.sigma 
+                    min_var = var
+                    print("solution updated")
+                    
+                if var < min_var :
+                    A = par.alpha
+                    S = par.sigma 
+                    min_var = var
+                    print("solution updated")
+                    
+                print("end of loop iteration "+str(i))
+                i+=1
 
-        return A, S
+
+        return A, S, min_var
 
 
 
@@ -252,6 +269,3 @@ class inauguralproject:
         #Return alpha, sigma and lowest variance
         return min_alpha , min_sigma, low_var
     
-                     
-        
-    def var_b(self)
