@@ -126,10 +126,10 @@ class inauguralproject:
         for i in range(par.wF_vec.size):
             par.wF = par.wF_vec[i]
             result = optimize.minimize(obj, x0 = [12.0]*4, bounds = [(0,24)]*4)
-            sol.HM_vec[i] = result.x[0]
-            sol.HF_vec[i] = result.x[1]
-            sol.LM_vec[i] = result.x[2]
-            sol.LF_vec[i] = result.x[3]
+            sol.HM_vec[i] = result.x[1]
+            sol.HF_vec[i] = result.x[3]
+            sol.LM_vec[i] = result.x[0]
+            sol.LF_vec[i] = result.x[2]
         
 
     def solve_wF_vec(self,discrete=False):
