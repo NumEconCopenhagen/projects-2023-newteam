@@ -149,13 +149,8 @@ class inauguralproject:
                 sol.LF_vec[i]=opt.LF
 
         else:
-            for i in enumerate(par.wF_vec) :
-                par.wF = i
-                opt = self.solve()
-                #sol.HM_vec[i]=opt.HM
-                #sol.HF_vec[i]=opt.HF
-                #sol.LM_vec[i]=opt.LM
-                #sol.LF_vec[i]=opt.LF
+            self.solve()
+             
 
         return sol
 
@@ -173,8 +168,8 @@ class inauguralproject:
             print("Beta0 = " + str(sol.beta0))
             print("Beta1 = " + str(sol.beta1))
     
-    
-    def estimate(self, alpha=np.nan, sigma=np.nan ):
+
+    def estimate(self, alpha= np.linspace(0,1,20), sigma=np.linspace(0,1,20) ):
         """ estimate alpha and sigma """
 
         par = self.par
@@ -183,40 +178,39 @@ class inauguralproject:
         min_var = np.nan
         A = np.nan
         S = np.nan
-        i=1
+        
+        # Loop for alpha
+        for alp  in range(len(alpha)):
 
-        for alp  in enumerate(alpha):
-
-            par.alpha = alp[-1]
+            par.alpha = alpha[alp]
 
             print("par.alpha = "+str(par.alpha))
 
-            for sig in enumerate(sigma):
+            # Loop for sigma
+            for sig in range(len(sigma)):
 
-                par.sigma = sig[-1]
+                par.sigma = sigma[sig]
 
                 print("par.sigma = "+str(par.sigma))
 
                 self.solve_wF_vec()
                 self.run_regression(print==True)
-
+                
+                # Calculate the total error for given betas
                 var = (par.beta0_target-sol.beta0)**2 + (par.beta1_target-sol.beta1)**2
                 print(var)
 
+                #Conditions for replacing the values for alpha and sigma
                 if min_var is np.nan:
                     A = par.alpha
                     S = par.sigma 
                     min_var = var
-                    print("solution updated")
                     
                 if var < min_var :
                     A = par.alpha
                     S = par.sigma 
                     min_var = var
-                    print("solution updated")
-                    
-                print("end of loop iteration "+str(i))
-                i+=1
 
 
+        # returning the values
         return A, S, min_var
