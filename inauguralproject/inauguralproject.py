@@ -203,9 +203,6 @@ class inauguralproject:
                 var = (par.beta0_target-sol.beta0)**2 + (par.beta1_target-sol.beta1)**2
                 print(var)
 
-                alpha = alpha.astype(int)
-                sigma = sigma.astype(int)
-
                 if min_var is np.nan:
                     A = par.alpha
                     S = par.sigma 
