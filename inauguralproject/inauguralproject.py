@@ -150,8 +150,6 @@ class inauguralproject:
 
         else:
             self.solve()
-             
-
         return sol
 
     def run_regression(self,print=False):
@@ -164,53 +162,68 @@ class inauguralproject:
         y = np.log(sol.HF_vec/sol.HM_vec)
         A = np.vstack([np.ones(x.size),x]).T
         sol.beta0,sol.beta1 = np.linalg.lstsq(A,y,rcond=None)[0]
-        if print == True :
-            print("Beta0 = " + str(sol.beta0))
-            print("Beta1 = " + str(sol.beta1))
     
-
-    def estimate(self, alpha= np.linspace(0,1,20), sigma=np.linspace(0,1,20) ):
+    def estimate(self):
         """ estimate alpha and sigma """
 
         par = self.par
         sol = self.sol
+        res = optimize.minimize(self.est, x0 = [0.5, 1], method = 'nelder-mead')
+        return res
+    
+    def est(self, x):
+        par = self.par
+        sol = self.sol
+        par.alpha = x[0]
+        par.sigma = x[1]
+        self.solve_wF_vec()
+        self.run_regression()
+        sqr = (sol.beta0 - par.beta0_target)**2 + (sol.beta1 - par.beta1_target)**2
+        return sqr
+    
+    #def estimate(self, alpha= np.linspace(0,1,20), sigma=np.linspace(0,1,20) ):
+        #""" estimate alpha and sigma """
 
-        min_var = np.nan
-        A = np.nan
-        S = np.nan
+        #par = self.par
+        #sol = self.sol
+
+        #min_var = np.nan
+        #A = np.nan
+        #S = np.nan
         
         # Loop for alpha
-        for alp  in range(len(alpha)):
+        #for alp  in range(len(alpha)):
 
-            par.alpha = alpha[alp]
+            #par.alpha = alpha[alp]
 
-            print("par.alpha = "+str(par.alpha))
+            #print("par.alpha = "+str(par.alpha))
 
             # Loop for sigma
-            for sig in range(len(sigma)):
+            #for sig in range(len(sigma)):
 
-                par.sigma = sigma[sig]
+                #par.sigma = sigma[sig]
 
-                print("par.sigma = "+str(par.sigma))
+                #print("par.sigma = "+str(par.sigma))
 
-                self.solve_wF_vec()
-                self.run_regression(print==True)
+                #self.solve_wF_vec()
+                #self.run_regression(print==True)
                 
                 # Calculate the total error for given betas
-                var = (par.beta0_target-sol.beta0)**2 + (par.beta1_target-sol.beta1)**2
-                print(var)
+                #var = (par.beta0_target-sol.beta0)**2 + (par.beta1_target-sol.beta1)**2
+                #print(var)
 
                 #Conditions for replacing the values for alpha and sigma
-                if min_var is np.nan:
-                    A = par.alpha
-                    S = par.sigma 
-                    min_var = var
+                #if min_var is np.nan:
+                    #A = par.alpha
+                    #S = par.sigma 
+                    #min_var = var
                     
-                if var < min_var :
-                    A = par.alpha
-                    S = par.sigma 
-                    min_var = var
+                #if var < min_var :
+                    #A = par.alpha
+                    #S = par.sigma 
+                    #min_var = var
 
 
         # returning the values
-        return A, S, min_var
+        #return A, S, min_var
+    
