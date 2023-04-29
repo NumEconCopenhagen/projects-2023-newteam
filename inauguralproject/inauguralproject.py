@@ -56,7 +56,7 @@ class inauguralproject:
         if par.sigma == 1:
             H = HM**(1-par.alpha)*HF**par.alpha
         elif par.sigma == 0:
-            H = np.min (HM, HF)
+            H = np.fmin (HM, HF)
         else:
             H = ((1- par.alpha)*HM**((par.sigma -1)/par.sigma)+ par.alpha*HF**((par.sigma -1)/par.sigma))**(par.sigma/(par.sigma - 1))
          
@@ -163,13 +163,13 @@ class inauguralproject:
         A = np.vstack([np.ones(x.size),x]).T
         sol.beta0,sol.beta1 = np.linalg.lstsq(A,y,rcond=None)[0]
     
-    def estimate(self):
-        """ estimate alpha and sigma """
+    #def estimate(self):
+        #""" estimate alpha and sigma """
 
-        par = self.par
-        sol = self.sol
-        res = optimize.minimize(self.est, x0 = [0.5, 1], method = 'nelder-mead')
-        return res
+        #par = self.par
+        #sol = self.sol
+        #res = optimize.minimize(self.est, x0 = [0.5, 1], method = 'nelder-mead')
+        #return res
     
     def est(self, x):
         par = self.par
@@ -181,49 +181,47 @@ class inauguralproject:
         sqr = (sol.beta0 - par.beta0_target)**2 + (sol.beta1 - par.beta1_target)**2
         return sqr
     
-    #def estimate(self, alpha= np.linspace(0,1,20), sigma=np.linspace(0,1,20) ):
-        #""" estimate alpha and sigma """
+    def estimate(self, alpha= np.linspace(0,1,20), sigma=np.linspace(0,1,20) ):
+        """ estimate alpha and sigma """
 
-        #par = self.par
-        #sol = self.sol
+        par = self.par
+        sol = self.sol
 
-        #min_var = np.nan
-        #A = np.nan
-        #S = np.nan
+        min_var = np.nan
+        A = np.nan
+        S = np.nan
         
         # Loop for alpha
-        #for alp  in range(len(alpha)):
+        for alp  in range(len(alpha)):
 
-            #par.alpha = alpha[alp]
+            par.alpha = alpha[alp]
 
-            #print("par.alpha = "+str(par.alpha))
 
             # Loop for sigma
-            #for sig in range(len(sigma)):
+            for sig in range(len(sigma)):
 
-                #par.sigma = sigma[sig]
+                par.sigma = sigma[sig]
 
-                #print("par.sigma = "+str(par.sigma))
 
-                #self.solve_wF_vec()
-                #self.run_regression(print==True)
+                self.solve_wF_vec()
+                self.run_regression(print==True)
                 
                 # Calculate the total error for given betas
-                #var = (par.beta0_target-sol.beta0)**2 + (par.beta1_target-sol.beta1)**2
-                #print(var)
+                var = (par.beta0_target-sol.beta0)**2 + (par.beta1_target-sol.beta1)**2
+                print(var)
 
                 #Conditions for replacing the values for alpha and sigma
-                #if min_var is np.nan:
-                    #A = par.alpha
-                    #S = par.sigma 
-                    #min_var = var
+                if min_var is np.nan:
+                    A = par.alpha
+                    S = par.sigma 
+                    min_var = var
                     
-                #if var < min_var :
-                    #A = par.alpha
-                    #S = par.sigma 
-                    #min_var = var
+                if var < min_var :
+                    A = par.alpha
+                    S = par.sigma 
+                    min_var = var
 
 
         # returning the values
-        #return A, S, min_var
+        return A, S, min_var
     
