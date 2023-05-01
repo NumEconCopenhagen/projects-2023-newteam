@@ -224,3 +224,20 @@ class inauguralproject:
         # returning the values
         return A, S, min_var
     
+    def estimate1(self):
+        """ estimate alpha and sigma """
+        par = self.par
+        sol = self.sol
+        res = optimize.minimize(self.est1, x0 = [0.5, 1], method = 'nelder-mead')
+        return res
+
+    def est1(self, x):
+        par = self.par
+        sol = self.sol
+        par.alpha = 0.5
+        par.sigma = x[1]
+        self.solve_wF_vec()
+        self.run_regression()
+        sqr = (sol.beta0 - par.beta0_target)**2 + (sol.beta1 - par.beta1_target)**2
+
+        return sqr
