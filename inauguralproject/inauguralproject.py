@@ -181,7 +181,7 @@ class inauguralproject:
         sqr = (sol.beta0 - par.beta0_target)**2 + (sol.beta1 - par.beta1_target)**2
         return sqr
     
-    def estimate(self, alpha= np.linspace(0,1,20), sigma=np.linspace(0,1,20) ):
+    def estimate(self, alpha= np.linspace(0,1,20), sigma=np.linspace(0,1,20)):
         """ estimate alpha and sigma """
 
         par = self.par
@@ -208,7 +208,6 @@ class inauguralproject:
                 
                 # Calculate the total error for given betas
                 var = (par.beta0_target-sol.beta0)**2 + (par.beta1_target-sol.beta1)**2
-                print(var)
 
                 #Conditions for replacing the values for alpha and sigma
                 if min_var is np.nan:
