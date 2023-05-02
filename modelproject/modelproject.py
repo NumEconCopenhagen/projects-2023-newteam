@@ -27,8 +27,21 @@ class model:
         par.w2 = 1
         par.r1 = 1
         par.r2 = 2
+    def calc_utility(self , ):
 
-    def find_max(self)
+       return
+
+    def find_max(self , L , K , u1 = 0.5 , u2 = 0.5 ):
+        U_max = 0
+        for l in range(L):
+            for k in range(K):
+
+                utility = self.calc_utility(u1 , u2 , l , k)
+                if utility > U_max:
+                    U_max = utility
+                    L_opt = l
+                    K_opt = k
+        return U_max , L_opt , K_opt     
 
 
 
