@@ -28,6 +28,7 @@ class model:
         par.r1 = 1
         par.r2 = 2
 
+    def find_max(self)
 
 
 
