@@ -241,6 +241,17 @@ class inauguralproject:
         sqr = (sol.beta0 - par.beta0_target)**2 + (sol.beta1 - par.beta1_target)**2
 
         return sqr
+    
+    def plot_results(self, log1, log2, plot_title):
+
+        # Create the plot
+        plt.plot(log1, log2)
+        plt.xlabel('log(wF/wM)')
+        plt.ylabel('log(HF/HM)')
+        plt.title(plot_title)
+
+        # Show the plot
+        plt.show()
        
 
    
