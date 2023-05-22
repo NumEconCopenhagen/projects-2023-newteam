@@ -1,0 +1,22 @@
+Peer Feedback Programming
+
+Inagural project
+
+p-b:
+https://github.com/NumEconCopenhagen/projects-2023-p-b/issues/2
+c:
+https://github.com/NumEconCopenhagen/projects-2023-c/issues/2
+
+Dataproject
+
+tgr401:
+https://github.com/NumEconCopenhagen/projects-2023-tgr401/issues/4
+ts-nt:
+https://github.com/NumEconCopenhagen/projects-2023-ts-nt/issues/3
+
+model project
+
+iim:
+https://github.com/NumEconCopenhagen/projects-2023-iim/issues/5
+jakki:
+https://github.com/NumEconCopenhagen/projects-2023-jakki/issues/6
